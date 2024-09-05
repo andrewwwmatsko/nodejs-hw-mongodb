@@ -18,7 +18,7 @@ export const createContact = async (payload) => {
   return newContact;
 };
 
-export const upsertContact = async (studentId, payload, options = {}) => {
+export const updateContact = async (studentId, payload, options = {}) => {
   const rawData = await contactsCollection.findOneAndUpdate(
     { _id: studentId },
     payload,
@@ -32,7 +32,6 @@ export const upsertContact = async (studentId, payload, options = {}) => {
   if (!rawData || !rawData.value) return null;
 
   return {
-    isNew: Boolean(rawData.lastErrorObject?.upserted),
     data: rawData.value,
   };
 };
