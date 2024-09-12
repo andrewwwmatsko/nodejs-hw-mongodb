@@ -9,13 +9,21 @@ import {
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
+import { validateBody } from '../utils/validateBody.js';
+
+import { addContactValidationSchema } from '../validation/contacts.js';
+
 const router = Router();
 
 router.get('/', ctrlWrapper(getAllContactsController));
 
 router.get('/:contactId', ctrlWrapper(getContactByIDController));
 
-router.post('/', ctrlWrapper(createContactController));
+router.post(
+  '/',
+  validateBody(addContactValidationSchema),
+  ctrlWrapper(createContactController),
+);
 
 router.patch('/:contactId', ctrlWrapper(patchContactController));
 
