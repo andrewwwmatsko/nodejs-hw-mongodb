@@ -1,6 +1,9 @@
 import { model, Schema } from 'mongoose';
 
-import { contactTypeList, phoneNumberPattern } from '../../constants/index.js';
+import {
+  contactTypeList,
+  phoneNumberPattern,
+} from '../../constants/contacts.js';
 
 import { setUpdateOptions, handleSaveError } from './hooks.js';
 
