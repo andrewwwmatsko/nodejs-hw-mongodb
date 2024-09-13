@@ -1,9 +1,11 @@
 const parseInterger = (value, defaultValue) => {
   if (typeof value !== 'string') return defaultValue;
 
-  if (Number.isNaN(parseInt(value))) return defaultValue;
+  const parsedValue = parseInt(value);
 
-  return parseInt(value);
+  if (Number.isNaN(parsedValue)) return defaultValue;
+
+  return parsedValue;
 };
 
 export const parsePaginationParams = ({ page, perPage }) => {

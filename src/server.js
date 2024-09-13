@@ -9,7 +9,6 @@ import { errorHandler } from './middlewares/errorHandler.js';
 
 import ContactsRouter from './routers/contacts.js';
 
-
 const PORT = Number(env('PORT', '3000'));
 
 export const setupServer = () => {

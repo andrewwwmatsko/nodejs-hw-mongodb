@@ -12,40 +12,32 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuerry = contactsCollection.find();
+  const contactsQuery = contactsCollection.find();
 
   if (filter.contactType) {
-    contactsQuerry.where('contactType').equals(filter.contactType);
+    contactsQuery.where('contactType').equals(filter.contactType);
   }
 
   if (filter.isFavourite) {
-    contactsQuerry.where('isFavourite').equals(filter.isFavourite);
+    contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
 
-  // const contacts = await contactsQuerry
-  //   .skip(skip)
-  //   .limit(limit)
-  //   .sort({ [sortBy]: sortOrder })
-  //   .exec();
-
-  // const contactsCount = await contactsCollection
-  //   .find()
-  //   .merge(contactsQuerry)
-  //   .countDocuments();
-
-  const [contacts, contactsCount] = await Promise.all([
-    contactsQuerry
+  const [contactsCount, contacts] = await Promise.all([
+    await contactsCollection.find().merge(contactsQuery).countDocuments(),
+    contactsQuery
       .skip(skip)
       .limit(limit)
       .sort({ [sortBy]: sortOrder })
       .exec(),
-    contactsCollection.find().merge(contactsQuerry).countDocuments(),
   ]);
 
   const paginationData = calculatePaginationData(contactsCount, page, perPage);
 
   return {
     data: contacts,
+    page,
+    perPage,
+    totalItems: contactsCount,
     ...paginationData,
   };
 };
