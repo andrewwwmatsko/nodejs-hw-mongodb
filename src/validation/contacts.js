@@ -13,8 +13,8 @@ export const addContactValidationSchema = Joi.object({
     'any.required': 'Phone number is required',
     'string.pattern.base': 'Please double-check the phone number',
   }),
-  email: Joi.string().email().required().messages({
-    'any.required': 'Email number is required',
+  email: Joi.string().email().messages({
+    'string,email': 'Please make sure that email is correct.',
   }),
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid(...contactTypeList),
