@@ -55,6 +55,7 @@ export const loginUser = async ({ email, password }) => {
 
   return newSession;
 };
+
 export const refreshUser = async ({ refreshToken, sessionId }) => {
   const oldSession = await SessionsCollection.findOne({
     _id: sessionId,
@@ -82,4 +83,8 @@ export const refreshUser = async ({ refreshToken, sessionId }) => {
   });
 
   return newSession;
+};
+
+export const logOutUser = async (sessionId) => {
+  await SessionsCollection.deleteOne({ _id: sessionId });
 };

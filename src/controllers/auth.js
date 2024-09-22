@@ -1,6 +1,11 @@
 import { THIRTY_DAYS } from '../constants/index.js';
 
-import { registerUser, loginUser, refreshUser } from '../services/auth.js';
+import {
+  registerUser,
+  loginUser,
+  refreshUser,
+  logOutUser,
+} from '../services/auth.js';
 
 const setupCookies = (res, { sessionId, refreshToken }) => {
   res.cookie('sessionId', sessionId, {
@@ -65,4 +70,15 @@ export const refreshUserController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+};
+
+export const logOutUserController = async (req, res) => {
+  if (req.cookies.sessionId) {
+    await logOutUser(req.cookies.sessionId);
+  }
+
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+
+  res.status(204).send();
 };
