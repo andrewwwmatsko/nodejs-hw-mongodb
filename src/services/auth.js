@@ -1,7 +1,25 @@
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
+import { randomBytes } from 'crypto';
 
 import UsersCollection from '../db/models/User.js';
+import SessionsCollection from '../db/models/Session.js';
+
+import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
+
+const generateTokens = () => {
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
+  const accessTokenValidUntil = new Date(Date.now() + FIFTEEN_MINUTES);
+  const refreshTokenValidUntil = new Date(Date.now() + THIRTY_DAYS);
+
+  return {
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil,
+    refreshTokenValidUntil,
+  };
+};
 
 export const registerUser = async (userData) => {
   const user = await UsersCollection.findOne({ email: userData.email });
@@ -13,4 +31,27 @@ export const registerUser = async (userData) => {
     ...userData,
     password: encryptedPassword,
   });
+};
+
+export const loginUser = async ({ email, password }) => {
+  const user = await UsersCollection.findOne({ email });
+  if (!user) {
+    throw createHttpError(401, 'Email or password is incorrect.');
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  if (!isPasswordCorrect) {
+    throw createHttpError(401, 'Email or password is incorrect.');
+  }
+
+  await SessionsCollection.deleteOne({ userId: user.id });
+
+  const tokens = generateTokens();
+
+  const newSession = await SessionsCollection.create({
+    userId: user._id,
+    ...tokens,
+  });
+
+  return newSession;
 };

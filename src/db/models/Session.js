@@ -30,6 +30,6 @@ const sessionSchema = new Schema(
   },
 );
 
-const SessionsCollection = model('user', sessionSchema);
+const SessionsCollection = model('session', sessionSchema);
 
 export default SessionsCollection;
