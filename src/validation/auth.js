@@ -16,3 +16,8 @@ export const loginUserValidationSchema = Joi.object({
 export const resetPasswordEmailValidationSchema = Joi.object({
   email: Joi.string().pattern(emailRegExp).required(),
 });
+
+export const resetPasswordValidationSchema = Joi.object({
+  password: Joi.string().min(4).required(),
+  token: Joi.string().required(),
+});
