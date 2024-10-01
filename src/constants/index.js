@@ -14,3 +14,11 @@ export const SMTP = {
 };
 
 export const TEMPLATES_DIR = path.resolve('src', 'templates');
+
+export const TEMP_UPLOAD_DIR = path.resolve('temp');
+
+export const CLOUDINARY = {
+  CLOUD_NAME: 'CLOUDINARY_CLOUD_NAME',
+  API_KEY: 'CLOUDINARY_API_KEY',
+  API_SECRET: 'CLOUDINARY_API_SECRET',
+};
