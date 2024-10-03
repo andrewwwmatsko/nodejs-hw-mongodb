@@ -1,6 +1,6 @@
 tags:
   - Auth
-summary: Login user
+summary: Logs in user
 operationId: loginUser
 description: 'Authenticates the user'
 security:
@@ -24,7 +24,7 @@ requestBody:
             example: password123
 responses:
   '200':
-    description: Logins user
+    description: Logs in user
     content:
       application/json:
         schema:

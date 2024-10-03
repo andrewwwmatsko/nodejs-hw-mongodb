@@ -487,7 +487,7 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Register user",
+        "summary": "Registers the user in the system",
         "operationId": "registerUser",
         "description": "Register user in the system",
         "security": [
@@ -567,7 +567,7 @@
         "tags": [
           "Auth"
         ],
-        "summary": "Login user",
+        "summary": "Logs in user",
         "operationId": "loginUser",
         "description": "Authenticates the user",
         "security": [
@@ -602,7 +602,7 @@
         },
         "responses": {
           "200": {
-            "description": "Logins user",
+            "description": "Logs in user",
             "content": {
               "application/json": {
                 "schema": {
